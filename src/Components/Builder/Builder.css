@@ -11,3 +11,21 @@
 
   display: flex;
 }
+
+.Builder__card {
+  margin-right: 2rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.Builder__input {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.Builder__input--summary {
+  resize: none;
+
+  flex-grow: 1;
+}

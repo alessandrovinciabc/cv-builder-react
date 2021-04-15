@@ -4,12 +4,13 @@ import './ImagePicker.css';
 
 function ImagePicker(props) {
   return (
-    <div className="ImagePicker">
+    <div className={`ImagePicker ${props.className}`}>
       <div className="ImagePicker__display">
         <img
           src={props.currentImg || props.defaultImg}
           className="ImagePicker__image"
           alt=""
+          draggable="false"
         />
       </div>
       <input

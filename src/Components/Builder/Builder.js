@@ -35,12 +35,24 @@ class Builder extends React.Component {
       <div className="Builder">
         <div className="Builder__info">
           <ImagePicker
+            className="Builder__card"
             currentImg={currentImg}
             defaultImg={defaultImg}
             onChange={(e) => {
               this.handleImgChange(e);
             }}
           />
+          <div className="Builder__card">
+            <input
+              className="Builder__input Builder__input--name"
+              type="text"
+              placeholder="Your name"
+            />
+            <textarea
+              className="Builder__input Builder__input--summary"
+              placeholder="Summary"
+            />
+          </div>
         </div>
       </div>
     );
