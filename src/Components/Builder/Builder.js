@@ -2,7 +2,11 @@ import React from 'react';
 
 import './Builder.css';
 
+//Assets
 import defaultImg from '../../Assets/picture-placeholder.png';
+
+//Components
+import ImagePicker from '../ImagePicker/ImagePicker.js';
 
 class Builder extends React.Component {
   constructor(props) {
@@ -30,20 +34,13 @@ class Builder extends React.Component {
     return (
       <div className="Builder">
         <div className="Builder__info">
-          <div className="Builder__picture-display">
-            <img
-              src={currentImg || defaultImg}
-              className="Builder__picture"
-              alt=""
-            />
-          </div>
-          <input
-            type="file"
-            accept="image/*"
+          <ImagePicker
+            currentImg={currentImg}
+            defaultImg={defaultImg}
             onChange={(e) => {
               this.handleImgChange(e);
             }}
-          ></input>
+          />
         </div>
       </div>
     );
