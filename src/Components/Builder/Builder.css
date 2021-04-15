@@ -1,0 +1,32 @@
+.Builder {
+  display: flex;
+  justify-content: center;
+
+  padding: 1rem 2rem;
+}
+
+.Builder__info {
+  height: 10rem;
+  width: 100%;
+}
+
+.Builder__picture-display {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 3px;
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  margin-bottom: 5px;
+}
+
+.Builder__picture {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  object-position: center;
+}
