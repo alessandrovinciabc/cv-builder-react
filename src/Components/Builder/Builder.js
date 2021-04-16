@@ -7,6 +7,7 @@ import defaultImg from '../../Assets/picture-placeholder.png';
 
 //Components
 import ImagePicker from '../ImagePicker/ImagePicker.js';
+import InfoInput from '../InfoInput/InfoInput.js';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,51 +75,7 @@ class Builder extends React.Component {
               this.handleImgChange(e);
             }}
           />
-          <div className="Builder__card">
-            <input
-              className="Builder__input Builder__input--name"
-              type="text"
-              placeholder="Your name"
-              autoComplete="off"
-            />
-            <textarea
-              className="Builder__input Builder__input--summary"
-              placeholder="Summary"
-              autoComplete="off"
-            />
-          </div>
-          <div className="Builder__card">
-            <input
-              className="Builder__input"
-              type="text"
-              placeholder="City"
-              autoComplete="off"
-            />
-            <input
-              className="Builder__input"
-              type="text"
-              placeholder="Phone"
-              autoComplete="off"
-            />
-            <input
-              className="Builder__input"
-              type="text"
-              placeholder="Email"
-              autoComplete="off"
-            />
-            <input
-              className="Builder__input"
-              type="text"
-              placeholder="Linkedin"
-              autoComplete="off"
-            />
-            <input
-              className="Builder__input"
-              type="text"
-              placeholder="Github"
-              autoComplete="off"
-            />
-          </div>
+          <InfoInput />
         </div>
         <div className="Builder__skills Builder__section">
           <h2>Skills</h2>
