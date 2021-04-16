@@ -52,12 +52,6 @@
   margin-bottom: 3rem;
 }
 
-.Education__input {
-  width: 100%;
-  max-width: 500px;
-  min-width: 300px;
-}
-
 .Builder__button {
   width: 5rem;
   height: 2rem;
@@ -66,4 +60,10 @@
 .Button--delete {
   height: 2rem;
   width: 2rem;
+}
+
+.Experience__input {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
 }

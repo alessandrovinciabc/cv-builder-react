@@ -9,6 +9,7 @@ import defaultImg from '../../Assets/picture-placeholder.png';
 import ImagePicker from '../ImagePicker/ImagePicker.js';
 import InfoInput from '../InfoInput/InfoInput.js';
 import SkillList from '../SkillList/SkillList.js';
+import ExperienceList from '../ExperienceList/ExperienceList.js';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -91,46 +92,9 @@ class Builder extends React.Component {
             this.handleSkillDelete(index);
           }}
         />
-        <div className="Builder__education Builder__section">
-          <h2>Education</h2>
-          <input
-            className="Builder__input Education__input"
-            type="text"
-            autoComplete="off"
-            placeholder="Degree"
-          />
-          <textarea
-            className="Builder__input Builder__input--summary Education__input"
-            placeholder="Description"
-            autoComplete="off"
-          />
-          <label>
-            Start date:
-            <input
-              className="Builder__input Education__input"
-              type="date"
-              autoComplete="off"
-            />
-          </label>
-          <label>
-            End date:
-            <input
-              className="Builder__input Education__input"
-              type="date"
-              autoComplete="off"
-            />
-          </label>
-          <div>
-            <button className="Builder__button">Add</button>
-            <button className="Builder__button">Reset</button>
-          </div>
-        </div>
-        <div className="Builder__experience Builder__section">
-          <h2>Experience</h2>
-        </div>
-        <div className="Builder__projects Builder__section">
-          <h2>Personal Projects</h2>
-        </div>
+        <ExperienceList name="Education" />
+        <ExperienceList name="Experience" />
+        <ExperienceList name="Personal Projects" />
       </div>
     );
   }
