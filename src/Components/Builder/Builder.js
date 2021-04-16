@@ -69,6 +69,11 @@ class Builder extends React.Component {
             />
           </div>
         </div>
+        <div className="Builder__skills">
+          <h2>Skills</h2>
+          <input className="Builder__input Skill__input" type="text" />
+          <button className="Skill__confirm">Add new skill</button>
+        </div>
       </div>
     );
   }

@@ -1,6 +1,9 @@
 .Builder {
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
 
   padding: 1rem 2rem;
 }
@@ -32,4 +35,18 @@
 
   flex-grow: 1;
   flex-basis: 143px;
+}
+
+.Builder__skills {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.Skill__input {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
 }
