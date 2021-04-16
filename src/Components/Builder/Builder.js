@@ -17,10 +17,21 @@ class Builder extends React.Component {
   constructor(props) {
     super(props);
 
+    const DEFAULT_SECTIONS = ['Education', 'Experience', 'Personal Projects'];
+
+    let sectionObjects = DEFAULT_SECTIONS.map((title) => {
+      return {
+        id: uuidv4(),
+        title: title,
+        list: [],
+      };
+    });
+
     this.state = {
       currentImg: '',
       skillInput: '',
       skills: [],
+      sections: sectionObjects,
     };
   }
 
@@ -92,9 +103,9 @@ class Builder extends React.Component {
             this.handleSkillDelete(index);
           }}
         />
-        <ExperienceList name="Education" />
-        <ExperienceList name="Experience" />
-        <ExperienceList name="Personal Projects" />
+        {this.state.sections.map((section) => {
+          return <ExperienceList name={section.title} key={section.id} />;
+        })}
       </div>
     );
   }
