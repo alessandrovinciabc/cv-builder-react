@@ -53,6 +53,21 @@ class Builder extends React.Component {
               placeholder="Summary"
             />
           </div>
+          <div className="Builder__card">
+            <input className="Builder__input" type="text" placeholder="City" />
+            <input className="Builder__input" type="text" placeholder="Phone" />
+            <input className="Builder__input" type="text" placeholder="Email" />
+            <input
+              className="Builder__input"
+              type="text"
+              placeholder="Linkedin"
+            />
+            <input
+              className="Builder__input"
+              type="text"
+              placeholder="Github"
+            />
+          </div>
         </div>
       </div>
     );
