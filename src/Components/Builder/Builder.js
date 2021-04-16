@@ -8,6 +8,7 @@ import defaultImg from '../../Assets/picture-placeholder.png';
 //Components
 import ImagePicker from '../ImagePicker/ImagePicker.js';
 import InfoInput from '../InfoInput/InfoInput.js';
+import SkillList from '../SkillList/SkillList.js';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -77,45 +78,19 @@ class Builder extends React.Component {
           />
           <InfoInput />
         </div>
-        <div className="Builder__skills Builder__section">
-          <h2>Skills</h2>
-          <input
-            className="Builder__input Skill__input"
-            type="text"
-            autoComplete="off"
-            value={skillInput}
-            onChange={(e) => {
-              this.handleSkillInputChange(e);
-            }}
-          />
-          <button
-            className="Skill__confirm Builder__button"
-            onClick={() => {
-              this.handleSkillAdd();
-            }}
-          >
-            Add
-          </button>
-          <div className="Skill_list">
-            <ul>
-              {this.state.skills.map((skill, index) => {
-                return (
-                  <li className="Skill" key={skill.id}>
-                    {skill.text}{' '}
-                    <button
-                      className="Button--delete"
-                      onClick={() => {
-                        this.handleSkillDelete(index);
-                      }}
-                    >
-                      X
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
+        <SkillList
+          input={skillInput}
+          list={this.state.skills}
+          handleChange={(e) => {
+            this.handleSkillInputChange(e);
+          }}
+          handleAdd={() => {
+            this.handleSkillAdd();
+          }}
+          handleDelete={(index) => {
+            this.handleSkillDelete(index);
+          }}
+        />
         <div className="Builder__education Builder__section">
           <h2>Education</h2>
           <input
