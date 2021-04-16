@@ -111,6 +111,11 @@ class Builder extends React.Component {
             autoComplete="off"
             placeholder="Degree"
           />
+          <textarea
+            className="Builder__input Builder__input--summary Education__input"
+            placeholder="Description"
+            autoComplete="off"
+          />
           <label>
             Start date:
             <input
