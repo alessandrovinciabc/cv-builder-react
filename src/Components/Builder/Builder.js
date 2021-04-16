@@ -33,6 +33,11 @@ class Builder extends React.Component {
       skills: [],
       sections: sectionObjects,
     };
+
+    this.handleImgChange = this.handleImgChange.bind(this);
+    this.handleSkillInputChange = this.handleSkillInputChange.bind(this);
+    this.handleSkillAdd = this.handleSkillAdd.bind(this);
+    this.handleSkillDelete = this.handleSkillDelete.bind(this);
   }
 
   handleImgChange(e) {
@@ -75,7 +80,20 @@ class Builder extends React.Component {
   }
 
   render() {
-    let { currentImg, skillInput } = this.state;
+    let { currentImg, skillInput, skills, sections } = this.state;
+
+    let {
+      handleImgChange,
+      handleSkillInputChange,
+      handleSkillAdd,
+      handleSkillDelete,
+    } = this;
+
+    let skillHandlers = {
+      input: handleSkillInputChange,
+      add: handleSkillAdd,
+      delete: handleSkillDelete,
+    };
 
     return (
       <div className="Builder">
@@ -84,26 +102,12 @@ class Builder extends React.Component {
             className="Builder__card"
             currentImg={currentImg}
             defaultImg={defaultImg}
-            onChange={(e) => {
-              this.handleImgChange(e);
-            }}
+            onChange={handleImgChange}
           />
           <InfoInput />
         </div>
-        <SkillList
-          input={skillInput}
-          list={this.state.skills}
-          handleChange={(e) => {
-            this.handleSkillInputChange(e);
-          }}
-          handleAdd={() => {
-            this.handleSkillAdd();
-          }}
-          handleDelete={(index) => {
-            this.handleSkillDelete(index);
-          }}
-        />
-        {this.state.sections.map((section) => {
+        <SkillList input={skillInput} list={skills} handlers={skillHandlers} />
+        {sections.map((section) => {
           return <ExperienceList name={section.title} key={section.id} />;
         })}
       </div>

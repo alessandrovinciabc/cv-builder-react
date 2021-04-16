@@ -3,6 +3,8 @@ import React from 'react';
 import '../Builder/Builder.css';
 
 function SkillList(props) {
+  let { handlers } = props;
+
   return (
     <div className="Builder__skills Builder__section">
       <h2>Skills</h2>
@@ -11,12 +13,9 @@ function SkillList(props) {
         type="text"
         autoComplete="off"
         value={props.input}
-        onChange={props.handleChange}
+        onChange={handlers.input}
       />
-      <button
-        className="Skill__confirm Builder__button"
-        onClick={props.handleAdd}
-      >
+      <button className="Skill__confirm Builder__button" onClick={handlers.add}>
         Add
       </button>
       <div className="Skill_list">
@@ -28,7 +27,7 @@ function SkillList(props) {
                 <button
                   className="Button--delete"
                   onClick={() => {
-                    props.handleDelete(index);
+                    handlers.delete(index);
                   }}
                 >
                   X
