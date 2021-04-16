@@ -49,6 +49,17 @@ class Builder extends React.Component {
     });
   }
 
+  handleSkillDelete(index) {
+    this.setState((state) => {
+      let filtered = state.skills.slice();
+      filtered.splice(index, 1);
+
+      return {
+        skills: filtered,
+      };
+    });
+  }
+
   render() {
     let { currentImg, skillInput } = this.state;
 
@@ -130,8 +141,20 @@ class Builder extends React.Component {
           </button>
           <div className="Skill_list">
             <ul>
-              {this.state.skills.map((skill) => {
-                return <li key={skill.id}>{skill.text}</li>;
+              {this.state.skills.map((skill, index) => {
+                return (
+                  <li className="Skill" key={skill.id}>
+                    {skill.text}{' '}
+                    <button
+                      className="Button--delete"
+                      onClick={() => {
+                        this.handleSkillDelete(index);
+                      }}
+                    >
+                      X
+                    </button>
+                  </li>
+                );
               })}
             </ul>
           </div>

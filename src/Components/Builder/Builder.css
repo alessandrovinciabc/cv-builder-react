@@ -62,3 +62,8 @@
   width: 5rem;
   height: 2rem;
 }
+
+.Button--delete {
+  height: 2rem;
+  width: 2rem;
+}
