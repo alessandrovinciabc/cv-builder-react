@@ -37,16 +37,28 @@
   flex-basis: 143px;
 }
 
-.Builder__skills {
+.Skill__input {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+}
+
+.Builder__section {
   display: flex;
   align-items: center;
   flex-direction: column;
 
   width: 100%;
+  margin-bottom: 3rem;
 }
 
-.Skill__input {
+.Education__input {
   width: 100%;
   max-width: 500px;
   min-width: 300px;
+}
+
+.Builder__button {
+  width: 5rem;
+  height: 2rem;
 }

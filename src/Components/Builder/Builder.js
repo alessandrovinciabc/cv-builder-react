@@ -88,14 +88,55 @@ class Builder extends React.Component {
             />
           </div>
         </div>
-        <div className="Builder__skills">
+        <div className="Builder__skills Builder__section">
           <h2>Skills</h2>
           <input
             className="Builder__input Skill__input"
             type="text"
             autoComplete="off"
           />
-          <button className="Skill__confirm">Add new skill</button>
+          <button className="Skill__confirm Builder__button">Add</button>
+        </div>
+        <div className="Builder__education Builder__section">
+          <h2>Education</h2>
+          <input
+            className="Builder__input Education__input"
+            type="text"
+            autoComplete="off"
+            placeholder="Place of study"
+          />
+          <input
+            className="Builder__input Education__input"
+            type="text"
+            autoComplete="off"
+            placeholder="Degree"
+          />
+          <label>
+            Start date:
+            <input
+              className="Builder__input Education__input"
+              type="date"
+              autoComplete="off"
+            />
+          </label>
+          <label>
+            End date:
+            <input
+              className="Builder__input Education__input"
+              type="date"
+              autoComplete="off"
+            />
+          </label>
+          <div>
+            <button className="Builder__button">Add</button>
+            <button className="Builder__button">Reset</button>
+          </div>
+        </div>
+        <div className="Builder__experience Builder__section">
+          <h2>Experience</h2>
+        </div>
+        <div className="Builder__projects Builder__section">
+          <h2>Personal Projects</h2>
         </div>
       </div>
     );
