@@ -47,31 +47,54 @@ class Builder extends React.Component {
               className="Builder__input Builder__input--name"
               type="text"
               placeholder="Your name"
+              autoComplete="off"
             />
             <textarea
               className="Builder__input Builder__input--summary"
               placeholder="Summary"
+              autoComplete="off"
             />
           </div>
           <div className="Builder__card">
-            <input className="Builder__input" type="text" placeholder="City" />
-            <input className="Builder__input" type="text" placeholder="Phone" />
-            <input className="Builder__input" type="text" placeholder="Email" />
+            <input
+              className="Builder__input"
+              type="text"
+              placeholder="City"
+              autoComplete="off"
+            />
+            <input
+              className="Builder__input"
+              type="text"
+              placeholder="Phone"
+              autoComplete="off"
+            />
+            <input
+              className="Builder__input"
+              type="text"
+              placeholder="Email"
+              autoComplete="off"
+            />
             <input
               className="Builder__input"
               type="text"
               placeholder="Linkedin"
+              autoComplete="off"
             />
             <input
               className="Builder__input"
               type="text"
               placeholder="Github"
+              autoComplete="off"
             />
           </div>
         </div>
         <div className="Builder__skills">
           <h2>Skills</h2>
-          <input className="Builder__input Skill__input" type="text" />
+          <input
+            className="Builder__input Skill__input"
+            type="text"
+            autoComplete="off"
+          />
           <button className="Skill__confirm">Add new skill</button>
         </div>
       </div>
