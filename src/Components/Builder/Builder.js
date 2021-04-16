@@ -8,12 +8,16 @@ import defaultImg from '../../Assets/picture-placeholder.png';
 //Components
 import ImagePicker from '../ImagePicker/ImagePicker.js';
 
+import { v4 as uuidv4 } from 'uuid';
+
 class Builder extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       currentImg: '',
+      skillInput: '',
+      skills: [],
     };
   }
 
@@ -28,8 +32,25 @@ class Builder extends React.Component {
     });
   }
 
+  handleSkillInputChange(e) {
+    this.setState({ skillInput: e.target.value });
+  }
+
+  handleSkillAdd(e) {
+    this.setState((state) => {
+      if (state.skillInput !== '') {
+        return {
+          skills: state.skills.concat([
+            { id: uuidv4(), text: state.skillInput },
+          ]),
+          skillInput: '',
+        };
+      }
+    });
+  }
+
   render() {
-    let { currentImg } = this.state;
+    let { currentImg, skillInput } = this.state;
 
     return (
       <div className="Builder">
@@ -94,17 +115,29 @@ class Builder extends React.Component {
             className="Builder__input Skill__input"
             type="text"
             autoComplete="off"
+            value={skillInput}
+            onChange={(e) => {
+              this.handleSkillInputChange(e);
+            }}
           />
-          <button className="Skill__confirm Builder__button">Add</button>
+          <button
+            className="Skill__confirm Builder__button"
+            onClick={() => {
+              this.handleSkillAdd();
+            }}
+          >
+            Add
+          </button>
+          <div className="Skill_list">
+            <ul>
+              {this.state.skills.map((skill) => {
+                return <li key={skill.id}>{skill.text}</li>;
+              })}
+            </ul>
+          </div>
         </div>
         <div className="Builder__education Builder__section">
           <h2>Education</h2>
-          <input
-            className="Builder__input Education__input"
-            type="text"
-            autoComplete="off"
-            placeholder="Place of study"
-          />
           <input
             className="Builder__input Education__input"
             type="text"
