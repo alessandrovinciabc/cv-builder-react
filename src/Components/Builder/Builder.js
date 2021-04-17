@@ -102,13 +102,24 @@ class Builder extends React.Component {
   }
 
   render() {
-    let { currentImg, skillInput, skills } = this.state;
+    let {
+      currentImg,
+      skillInput,
+      skills,
+      educationInput,
+      experienceInput,
+      projectsInput,
+      education,
+      experience,
+      projects,
+    } = this.state;
 
     let {
       handleImgChange,
       handleSkillInputChange,
       handleSkillAdd,
       handleSkillDelete,
+      handleExperienceInputs,
     } = this;
 
     let skillHandlers = {
@@ -131,23 +142,23 @@ class Builder extends React.Component {
         <SkillList input={skillInput} list={skills} handlers={skillHandlers} />
         <ExperienceList
           name="Education"
-          inputs={this.state.educationInput}
+          inputs={educationInput}
           handler={(e) => {
-            this.handleExperienceInputs(e, 0);
+            handleExperienceInputs(e, 0);
           }}
         />
         <ExperienceList
           name="Experience"
-          inputs={this.state.experienceInput}
+          inputs={experienceInput}
           handler={(e) => {
-            this.handleExperienceInputs(e, 1);
+            handleExperienceInputs(e, 1);
           }}
         />
         <ExperienceList
           name="Projects"
-          inputs={this.state.projectsInput}
+          inputs={projectsInput}
           handler={(e) => {
-            this.handleExperienceInputs(e, 2);
+            handleExperienceInputs(e, 2);
           }}
         />
       </div>
