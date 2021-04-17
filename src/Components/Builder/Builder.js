@@ -17,27 +17,25 @@ class Builder extends React.Component {
   constructor(props) {
     super(props);
 
-    const DEFAULT_SECTIONS = ['Education', 'Experience', 'Personal Projects'];
-
-    let sectionObjects = DEFAULT_SECTIONS.map((title) => {
-      return {
-        id: uuidv4(),
-        title: title,
-        list: [],
-      };
-    });
+    const NUMBER_OF_INPUTS = 4;
 
     this.state = {
       currentImg: '',
       skillInput: '',
       skills: [],
-      sections: sectionObjects,
+      educationInput: Array(NUMBER_OF_INPUTS).fill(''),
+      experienceInput: Array(NUMBER_OF_INPUTS).fill(''),
+      projectsInput: Array(NUMBER_OF_INPUTS).fill(''),
+      education: [],
+      experience: [],
+      projects: [],
     };
 
     this.handleImgChange = this.handleImgChange.bind(this);
     this.handleSkillInputChange = this.handleSkillInputChange.bind(this);
     this.handleSkillAdd = this.handleSkillAdd.bind(this);
     this.handleSkillDelete = this.handleSkillDelete.bind(this);
+    this.handleExperienceInputs = this.handleExperienceInputs.bind(this);
   }
 
   handleImgChange(e) {
@@ -79,8 +77,32 @@ class Builder extends React.Component {
     });
   }
 
+  handleExperienceInputs(e, sectionNumber) {
+    //sectionNumber: 0 for education, 1 for experience, 2 for projects
+    let indexOfInput = e.target.dataset.index;
+    this.setState((state) => {
+      let copy;
+      switch (sectionNumber) {
+        case 0:
+          copy = state.educationInput.slice();
+          copy[indexOfInput] = e.target.value;
+          return { educationInput: copy };
+        case 1:
+          copy = state.experienceInput.slice();
+          copy[indexOfInput] = e.target.value;
+          return { experienceInput: copy };
+        case 2:
+          copy = state.projectsInput.slice();
+          copy[indexOfInput] = e.target.value;
+          return { projectsInput: copy };
+        default:
+          break;
+      }
+    });
+  }
+
   render() {
-    let { currentImg, skillInput, skills, sections } = this.state;
+    let { currentImg, skillInput, skills } = this.state;
 
     let {
       handleImgChange,
@@ -107,9 +129,27 @@ class Builder extends React.Component {
           <InfoInput />
         </div>
         <SkillList input={skillInput} list={skills} handlers={skillHandlers} />
-        {sections.map((section) => {
-          return <ExperienceList name={section.title} key={section.id} />;
-        })}
+        <ExperienceList
+          name="Education"
+          inputs={this.state.educationInput}
+          handler={(e) => {
+            this.handleExperienceInputs(e, 0);
+          }}
+        />
+        <ExperienceList
+          name="Experience"
+          inputs={this.state.experienceInput}
+          handler={(e) => {
+            this.handleExperienceInputs(e, 1);
+          }}
+        />
+        <ExperienceList
+          name="Projects"
+          inputs={this.state.projectsInput}
+          handler={(e) => {
+            this.handleExperienceInputs(e, 2);
+          }}
+        />
       </div>
     );
   }
