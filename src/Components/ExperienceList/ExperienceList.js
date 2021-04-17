@@ -49,7 +49,9 @@ function ExperienceList(props) {
         <button className="Builder__button" onClick={props.onAdd}>
           Add
         </button>
-        <button className="Builder__button">Reset</button>
+        <button className="Builder__button" onClick={props.onReset}>
+          Reset
+        </button>
       </div>
       {props.list.map((el, index) => {
         let startDate, endDate;

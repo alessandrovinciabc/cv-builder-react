@@ -12,12 +12,11 @@ import SkillList from '../SkillList/SkillList.js';
 import ExperienceList from '../ExperienceList/ExperienceList.js';
 
 import { v4 as uuidv4 } from 'uuid';
+const NUMBER_OF_INPUTS = 4;
 
 class Builder extends React.Component {
   constructor(props) {
     super(props);
-
-    const NUMBER_OF_INPUTS = 4;
 
     this.state = {
       currentImg: '',
@@ -36,6 +35,9 @@ class Builder extends React.Component {
     this.handleSkillAdd = this.handleSkillAdd.bind(this);
     this.handleSkillDelete = this.handleSkillDelete.bind(this);
     this.handleExperienceInputs = this.handleExperienceInputs.bind(this);
+    this.handleExperienceAdd = this.handleExperienceAdd.bind(this);
+    this.handleExperienceDelete = this.handleExperienceDelete.bind(this);
+    this.handleExperienceFormReset = this.handleExperienceFormReset.bind(this);
   }
 
   handleImgChange(e) {
@@ -114,7 +116,10 @@ class Builder extends React.Component {
             startDate: state.educationInput[2],
             endDate: state.educationInput[3],
           });
-          return { education: copy };
+          return {
+            education: copy,
+            educationInput: Array(NUMBER_OF_INPUTS).fill(''),
+          };
         case 1:
           copy = state.experience.slice();
           copy.push({
@@ -124,7 +129,10 @@ class Builder extends React.Component {
             startDate: state.experienceInput[2],
             endDate: state.experienceInput[3],
           });
-          return { experience: copy };
+          return {
+            experience: copy,
+            experienceInput: Array(NUMBER_OF_INPUTS).fill(''),
+          };
         case 2:
           copy = state.projects.slice();
           copy.push({
@@ -134,7 +142,10 @@ class Builder extends React.Component {
             startDate: state.projectsInput[2],
             endDate: state.projectsInput[3],
           });
-          return { projects: copy };
+          return {
+            projects: copy,
+            projectsInput: Array(NUMBER_OF_INPUTS).fill(''),
+          };
         default:
           break;
       }
@@ -164,6 +175,22 @@ class Builder extends React.Component {
     });
   }
 
+  handleExperienceFormReset(sectionNumber) {
+    switch (sectionNumber) {
+      case 0:
+        this.setState({ educationInput: Array(NUMBER_OF_INPUTS).fill('') });
+        break;
+      case 1:
+        this.setState({ experienceInput: Array(NUMBER_OF_INPUTS).fill('') });
+        break;
+      case 2:
+        this.setState({ projectsInput: Array(NUMBER_OF_INPUTS).fill('') });
+        break;
+      default:
+        break;
+    }
+  }
+
   render() {
     let {
       currentImg,
@@ -183,6 +210,9 @@ class Builder extends React.Component {
       handleSkillAdd,
       handleSkillDelete,
       handleExperienceInputs,
+      handleExperienceAdd,
+      handleExperienceDelete,
+      handleExperienceFormReset,
     } = this;
 
     let skillHandlers = {
@@ -210,10 +240,13 @@ class Builder extends React.Component {
             handleExperienceInputs(e, 0);
           }}
           onAdd={() => {
-            this.handleExperienceAdd(0);
+            handleExperienceAdd(0);
           }}
           onDelete={(e) => {
-            this.handleExperienceDelete(e, 0);
+            handleExperienceDelete(e, 0);
+          }}
+          onReset={() => {
+            handleExperienceFormReset(0);
           }}
           list={education}
         />
@@ -224,10 +257,13 @@ class Builder extends React.Component {
             handleExperienceInputs(e, 1);
           }}
           onAdd={() => {
-            this.handleExperienceAdd(1);
+            handleExperienceAdd(1);
           }}
           onDelete={(e) => {
-            this.handleExperienceDelete(e, 1);
+            handleExperienceDelete(e, 1);
+          }}
+          onReset={() => {
+            handleExperienceFormReset(1);
           }}
           list={experience}
         />
@@ -238,10 +274,13 @@ class Builder extends React.Component {
             handleExperienceInputs(e, 2);
           }}
           onAdd={() => {
-            this.handleExperienceAdd(2);
+            handleExperienceAdd(2);
           }}
           onDelete={(e) => {
-            this.handleExperienceDelete(e, 2);
+            handleExperienceDelete(e, 2);
+          }}
+          onReset={() => {
+            handleExperienceFormReset(2);
           }}
           list={projects}
         />
