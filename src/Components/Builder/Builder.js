@@ -101,6 +101,69 @@ class Builder extends React.Component {
     });
   }
 
+  handleExperienceAdd(sectionNumber) {
+    this.setState((state) => {
+      let copy;
+      switch (sectionNumber) {
+        case 0:
+          copy = state.education.slice();
+          copy.push({
+            id: uuidv4(),
+            title: state.educationInput[0],
+            description: state.educationInput[1],
+            startDate: state.educationInput[2],
+            endDate: state.educationInput[3],
+          });
+          return { education: copy };
+        case 1:
+          copy = state.experience.slice();
+          copy.push({
+            id: uuidv4(),
+            title: state.experienceInput[0],
+            description: state.experienceInput[1],
+            startDate: state.experienceInput[2],
+            endDate: state.experienceInput[3],
+          });
+          return { experience: copy };
+        case 2:
+          copy = state.projects.slice();
+          copy.push({
+            id: uuidv4(),
+            title: state.projectsInput[0],
+            description: state.projectsInput[1],
+            startDate: state.projectsInput[2],
+            endDate: state.projectsInput[3],
+          });
+          return { projects: copy };
+        default:
+          break;
+      }
+    });
+  }
+
+  handleExperienceDelete(e, sectionNumber) {
+    let index = e.target.dataset.index;
+    let copy;
+    this.setState((state) => {
+      switch (sectionNumber) {
+        case 0:
+          copy = state.education.slice();
+          copy.splice(index, 1);
+          return { education: copy };
+        case 1:
+          copy = state.experience.slice();
+          copy.splice(index, 1);
+          return { experience: copy };
+        case 2:
+          copy = state.projects.slice();
+          copy.splice(index, 1);
+          return { projects: copy };
+        default:
+          break;
+      }
+    });
+  }
+
   render() {
     let {
       currentImg,
@@ -146,6 +209,13 @@ class Builder extends React.Component {
           handler={(e) => {
             handleExperienceInputs(e, 0);
           }}
+          onAdd={() => {
+            this.handleExperienceAdd(0);
+          }}
+          onDelete={(e) => {
+            this.handleExperienceDelete(e, 0);
+          }}
+          list={education}
         />
         <ExperienceList
           name="Experience"
@@ -153,6 +223,13 @@ class Builder extends React.Component {
           handler={(e) => {
             handleExperienceInputs(e, 1);
           }}
+          onAdd={() => {
+            this.handleExperienceAdd(1);
+          }}
+          onDelete={(e) => {
+            this.handleExperienceDelete(e, 1);
+          }}
+          list={experience}
         />
         <ExperienceList
           name="Projects"
@@ -160,6 +237,13 @@ class Builder extends React.Component {
           handler={(e) => {
             handleExperienceInputs(e, 2);
           }}
+          onAdd={() => {
+            this.handleExperienceAdd(2);
+          }}
+          onDelete={(e) => {
+            this.handleExperienceDelete(e, 2);
+          }}
+          list={projects}
         />
       </div>
     );

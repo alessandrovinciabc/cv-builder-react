@@ -46,9 +46,40 @@ function ExperienceList(props) {
         />
       </label>
       <div>
-        <button className="Builder__button">Add</button>
+        <button className="Builder__button" onClick={props.onAdd}>
+          Add
+        </button>
         <button className="Builder__button">Reset</button>
       </div>
+      {props.list.map((el, index) => {
+        let startDate, endDate;
+        startDate = new Date(el.startDate);
+        endDate = new Date(el.endDate);
+        let monthStart, monthEnd;
+        let yearStart, yearEnd;
+
+        monthStart = startDate.toLocaleString('default', { month: 'long' });
+        monthEnd = endDate.toLocaleString('default', { month: 'long' });
+        yearStart = startDate.getFullYear();
+        yearEnd = endDate.getFullYear();
+        return (
+          <div className="Experience" key={el.id}>
+            <div className="Experience__title">{el.title}</div>
+            <div className="Experience__description">{el.description}</div>
+            {el.startDate && el.endDate
+              ? `From ${monthStart} ${yearStart} to ${monthEnd} ${yearEnd}`
+              : ''}
+
+            <button
+              className="Button--delete"
+              data-index={index}
+              onClick={props.onDelete}
+            >
+              X
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }
