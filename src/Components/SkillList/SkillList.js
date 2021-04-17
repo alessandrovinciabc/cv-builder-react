@@ -5,6 +5,12 @@ import '../Builder/Builder.css';
 function SkillList(props) {
   let { handlers } = props;
 
+  let handleEnterKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handlers.add();
+    }
+  };
+
   return (
     <div className="Builder__skills Builder__section">
       <h2>Skills</h2>
@@ -14,6 +20,7 @@ function SkillList(props) {
         autoComplete="off"
         value={props.input}
         onChange={handlers.input}
+        onKeyDown={handleEnterKeyDown}
       />
       <button className="Skill__confirm Builder__button" onClick={handlers.add}>
         Add
