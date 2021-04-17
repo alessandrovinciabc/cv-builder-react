@@ -67,3 +67,17 @@
   max-width: 500px;
   min-width: 300px;
 }
+
+.Skill-list {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+
+  margin-top: 2rem;
+}
+
+.Skill {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}

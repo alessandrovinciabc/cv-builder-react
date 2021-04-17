@@ -25,24 +25,22 @@ function SkillList(props) {
       <button className="Skill__confirm Builder__button" onClick={handlers.add}>
         Add
       </button>
-      <div className="Skill_list">
-        <ul>
-          {props.list.map((skill, index) => {
-            return (
-              <li className="Skill" key={skill.id}>
-                {skill.text}{' '}
-                <button
-                  className="Button--delete"
-                  onClick={() => {
-                    handlers.delete(index);
-                  }}
-                >
-                  X
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+      <div className="Skill-list">
+        {props.list.map((skill, index) => {
+          return (
+            <div className="Skill" key={skill.id}>
+              {skill.text}
+              <button
+                className="Button--delete"
+                onClick={() => {
+                  handlers.delete(index);
+                }}
+              >
+                X
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
