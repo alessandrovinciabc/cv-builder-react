@@ -18,16 +18,22 @@ class Builder extends React.Component {
   constructor(props) {
     super(props);
 
+    const sections = ['Education', 'Experience', 'Projects'];
+
+    let createSection = (title) => {
+      return {
+        id: uuidv4(),
+        title: title,
+        input: Array(NUMBER_OF_INPUTS).fill(''),
+        list: [],
+      };
+    };
+
     this.state = {
       currentImg: '',
       skillInput: '',
       skills: [],
-      educationInput: Array(NUMBER_OF_INPUTS).fill(''),
-      experienceInput: Array(NUMBER_OF_INPUTS).fill(''),
-      projectsInput: Array(NUMBER_OF_INPUTS).fill(''),
-      education: [],
-      experience: [],
-      projects: [],
+      sections: sections.map(createSection),
     };
 
     this.handleImgChange = this.handleImgChange.bind(this);
@@ -80,129 +86,54 @@ class Builder extends React.Component {
   }
 
   handleExperienceInputs(e, sectionNumber) {
-    //sectionNumber: 0 for education, 1 for experience, 2 for projects
     let indexOfInput = e.target.dataset.index;
     this.setState((state) => {
-      let copy;
-      switch (sectionNumber) {
-        case 0:
-          copy = state.educationInput.slice();
-          copy[indexOfInput] = e.target.value;
-          return { educationInput: copy };
-        case 1:
-          copy = state.experienceInput.slice();
-          copy[indexOfInput] = e.target.value;
-          return { experienceInput: copy };
-        case 2:
-          copy = state.projectsInput.slice();
-          copy[indexOfInput] = e.target.value;
-          return { projectsInput: copy };
-        default:
-          break;
-      }
+      let copy = JSON.parse(JSON.stringify(state.sections));
+      copy[sectionNumber].input[indexOfInput] = e.target.value;
+      return { sections: copy };
     });
   }
 
   handleExperienceAdd(sectionNumber) {
     this.setState((state) => {
-      let copy;
-      switch (sectionNumber) {
-        case 0:
-          copy = state.education.slice();
-          copy.push({
-            id: uuidv4(),
-            title: state.educationInput[0],
-            description: state.educationInput[1],
-            startDate: state.educationInput[2],
-            endDate: state.educationInput[3],
-          });
-          return {
-            education: copy,
-            educationInput: Array(NUMBER_OF_INPUTS).fill(''),
-          };
-        case 1:
-          copy = state.experience.slice();
-          copy.push({
-            id: uuidv4(),
-            title: state.experienceInput[0],
-            description: state.experienceInput[1],
-            startDate: state.experienceInput[2],
-            endDate: state.experienceInput[3],
-          });
-          return {
-            experience: copy,
-            experienceInput: Array(NUMBER_OF_INPUTS).fill(''),
-          };
-        case 2:
-          copy = state.projects.slice();
-          copy.push({
-            id: uuidv4(),
-            title: state.projectsInput[0],
-            description: state.projectsInput[1],
-            startDate: state.projectsInput[2],
-            endDate: state.projectsInput[3],
-          });
-          return {
-            projects: copy,
-            projectsInput: Array(NUMBER_OF_INPUTS).fill(''),
-          };
-        default:
-          break;
-      }
+      let copy = JSON.parse(JSON.stringify(state.sections));
+
+      copy[sectionNumber].list.push({
+        id: uuidv4(),
+        title: state.sections[sectionNumber].input[0],
+        description: state.sections[sectionNumber].input[1],
+        startDate: state.sections[sectionNumber].input[2],
+        endDate: state.sections[sectionNumber].input[3],
+      });
+
+      copy[sectionNumber].input = Array(NUMBER_OF_INPUTS).fill('');
+
+      return {
+        sections: copy,
+      };
     });
   }
 
   handleExperienceDelete(e, sectionNumber) {
     let index = e.target.dataset.index;
-    let copy;
     this.setState((state) => {
-      switch (sectionNumber) {
-        case 0:
-          copy = state.education.slice();
-          copy.splice(index, 1);
-          return { education: copy };
-        case 1:
-          copy = state.experience.slice();
-          copy.splice(index, 1);
-          return { experience: copy };
-        case 2:
-          copy = state.projects.slice();
-          copy.splice(index, 1);
-          return { projects: copy };
-        default:
-          break;
-      }
+      let copy = JSON.parse(JSON.stringify(state.sections));
+      copy[sectionNumber].list.splice(index, 1);
+      return { sections: copy };
     });
   }
 
   handleExperienceFormReset(sectionNumber) {
-    switch (sectionNumber) {
-      case 0:
-        this.setState({ educationInput: Array(NUMBER_OF_INPUTS).fill('') });
-        break;
-      case 1:
-        this.setState({ experienceInput: Array(NUMBER_OF_INPUTS).fill('') });
-        break;
-      case 2:
-        this.setState({ projectsInput: Array(NUMBER_OF_INPUTS).fill('') });
-        break;
-      default:
-        break;
-    }
+    this.setState((state) => {
+      let copy = JSON.parse(JSON.stringify(state.sections));
+      copy[sectionNumber].input = Array(NUMBER_OF_INPUTS).fill('');
+
+      return { sections: copy };
+    });
   }
 
   render() {
-    let {
-      currentImg,
-      skillInput,
-      skills,
-      educationInput,
-      experienceInput,
-      projectsInput,
-      education,
-      experience,
-      projects,
-    } = this.state;
+    let { currentImg, skillInput, skills } = this.state;
 
     let {
       handleImgChange,
@@ -233,57 +164,30 @@ class Builder extends React.Component {
           <InfoInput />
         </div>
         <SkillList input={skillInput} list={skills} handlers={skillHandlers} />
-        <ExperienceList
-          name="Education"
-          inputs={educationInput}
-          handler={(e) => {
-            handleExperienceInputs(e, 0);
-          }}
-          onAdd={() => {
-            handleExperienceAdd(0);
-          }}
-          onDelete={(e) => {
-            handleExperienceDelete(e, 0);
-          }}
-          onReset={() => {
-            handleExperienceFormReset(0);
-          }}
-          list={education}
-        />
-        <ExperienceList
-          name="Experience"
-          inputs={experienceInput}
-          handler={(e) => {
-            handleExperienceInputs(e, 1);
-          }}
-          onAdd={() => {
-            handleExperienceAdd(1);
-          }}
-          onDelete={(e) => {
-            handleExperienceDelete(e, 1);
-          }}
-          onReset={() => {
-            handleExperienceFormReset(1);
-          }}
-          list={experience}
-        />
-        <ExperienceList
-          name="Projects"
-          inputs={projectsInput}
-          handler={(e) => {
-            handleExperienceInputs(e, 2);
-          }}
-          onAdd={() => {
-            handleExperienceAdd(2);
-          }}
-          onDelete={(e) => {
-            handleExperienceDelete(e, 2);
-          }}
-          onReset={() => {
-            handleExperienceFormReset(2);
-          }}
-          list={projects}
-        />
+
+        {/*Education, Experience, Projects sections*/}
+        {this.state.sections.map((section, index) => {
+          return (
+            <ExperienceList
+              key={section.id}
+              name={section.title}
+              inputs={section.input}
+              handler={(e) => {
+                handleExperienceInputs(e, index);
+              }}
+              onAdd={() => {
+                handleExperienceAdd(index);
+              }}
+              onDelete={(e) => {
+                handleExperienceDelete(e, index);
+              }}
+              onReset={() => {
+                handleExperienceFormReset(index);
+              }}
+              list={section.list}
+            />
+          );
+        })}
       </div>
     );
   }
