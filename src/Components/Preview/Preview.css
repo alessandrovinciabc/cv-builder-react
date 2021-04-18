@@ -4,6 +4,8 @@
 
   --height-of-a4: 842px;
   --width-of-a4: 595px;
+
+  padding: 2rem 0;
 }
 
 .Preview {
