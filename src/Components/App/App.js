@@ -58,14 +58,11 @@ class App extends React.Component {
 
   handleSkillAdd(e) {
     this.setState((state) => {
-      if (state.skillInput !== '') {
-        return {
-          skills: state.skills.concat([
-            { id: uuidv4(), text: state.skillInput },
-          ]),
-          skillInput: '',
-        };
-      }
+      if (state.skillInput !== '') return;
+      return {
+        skills: state.skills.concat([{ id: uuidv4(), text: state.skillInput }]),
+        skillInput: '',
+      };
     });
   }
 
