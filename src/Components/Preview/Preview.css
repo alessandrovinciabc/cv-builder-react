@@ -1,0 +1,45 @@
+.PreviewContainer {
+  display: flex;
+  justify-content: center;
+
+  --height-of-a4: 842px;
+  --width-of-a4: 595px;
+}
+
+.Preview {
+  display: flex;
+  justify-content: center;
+  width: var(--width-of-a4);
+
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+  margin: 2rem 0;
+}
+
+.Preview__image {
+  height: 110px;
+  width: 110px;
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 100%;
+  padding: 4px;
+  border: 2px solid white;
+
+  margin-top: 2rem;
+}
+
+.SideBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 30%;
+  height: var(--height-of-a4);
+  background-color: rgb(66, 152, 223);
+}
+
+.Main {
+  width: 70%;
+  height: var(--height-of-a4);
+}
