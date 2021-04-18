@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from '../Header/Header.js';
 import Builder from '../Builder/Builder.js';
+import Preview from '../Preview/Preview.js';
 
 import { v4 as uuidv4 } from 'uuid';
 const NUMBER_OF_INPUTS = 4;
@@ -39,6 +40,7 @@ class App extends React.Component {
     this.handleExperienceAdd = this.handleExperienceAdd.bind(this);
     this.handleExperienceDelete = this.handleExperienceDelete.bind(this);
     this.handleExperienceFormReset = this.handleExperienceFormReset.bind(this);
+    this.handlePreviewToggle = this.handlePreviewToggle.bind(this);
   }
 
   handleImgChange(e) {
@@ -125,6 +127,12 @@ class App extends React.Component {
     });
   }
 
+  handlePreviewToggle() {
+    this.setState((state) => {
+      return { previewMode: !state.previewMode };
+    });
+  }
+
   render() {
     let skillHandlers, sectionHandlers;
 
@@ -149,14 +157,34 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Header logo="CV BUILDER" />
-        <Builder
-          handlers={handlers}
-          currentImg={this.state.currentImg}
-          skillInput={this.state.skillInput}
-          skills={this.state.skills}
-          sections={this.state.sections}
-        />
+        <Header logo="CV BUILDER">
+          <div className="PreviewHeader">
+            <label className="PreviewToggler">
+              <input
+                className="PreviewToggler__input"
+                type="checkbox"
+                checked={this.state.previewMode}
+                onChange={this.handlePreviewToggle}
+              />
+              <div className="PreviewToggler__slider"></div>
+            </label>
+          </div>
+        </Header>
+        {this.state.previewMode ? (
+          <Preview
+            currentImg={this.state.currentImg}
+            skills={this.state.skills}
+            sections={this.state.sections}
+          />
+        ) : (
+          <Builder
+            handlers={handlers}
+            currentImg={this.state.currentImg}
+            skillInput={this.state.skillInput}
+            skills={this.state.skills}
+            sections={this.state.sections}
+          />
+        )}
       </div>
     );
   }

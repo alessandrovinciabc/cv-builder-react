@@ -1,0 +1,52 @@
+.PreviewHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PreviewHeader::before {
+  content: 'Preview';
+}
+
+.PreviewToggler {
+  position: relative;
+  width: 4rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  margin-left: 5px;
+}
+
+.PreviewToggler__input {
+  display: none;
+}
+
+.PreviewToggler__slider {
+  position: absolute;
+  left: 0;
+
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 100%;
+  background-color: grey;
+  margin: 0 2px;
+
+  transition: left 0.4s;
+}
+
+.PreviewToggler__input:checked + .PreviewToggler__slider {
+  left: calc(100% - 1.8rem - 4px);
+  background-color: #6ddf7c;
+}
+
+@media only screen and (max-width: 540px) {
+  .PreviewHeader::before {
+    content: '';
+  }
+}
