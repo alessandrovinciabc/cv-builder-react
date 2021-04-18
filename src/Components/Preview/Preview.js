@@ -48,9 +48,14 @@ const MyDocument = (props) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <View style={styles.pictureContainer}>
-          <Image src={props.img} style={styles.image} />
-        </View>
+        {/*passing an empty string makes this crash*/}
+        {props.img ? (
+          <View style={styles.pictureContainer}>
+            <Image src={props.img} style={styles.image} />
+          </View>
+        ) : (
+          false
+        )}
       </View>
     </Page>
   </Document>

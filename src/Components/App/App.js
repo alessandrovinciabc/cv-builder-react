@@ -59,7 +59,6 @@ class App extends React.Component {
   handleInfoChange(e) {
     this.setState((state) => {
       let copy = state.info.slice();
-      console.log(e.target.dataset.index);
       copy[e.target.dataset.index] = e.target.value;
       return {
         info: copy,
