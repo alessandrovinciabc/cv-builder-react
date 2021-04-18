@@ -88,6 +88,7 @@ class App extends React.Component {
 
   handleExperienceAdd(sectionNumber) {
     this.setState((state) => {
+      if (!state.sections[sectionNumber].input[0]) return;
       let copy = JSON.parse(JSON.stringify(state.sections));
 
       copy[sectionNumber].list.push({
