@@ -24,7 +24,10 @@ class Builder extends React.Component {
             defaultImg={defaultImg}
             onChange={handlers.img}
           />
-          <InfoInput />
+          <InfoInput
+            info={this.props.info}
+            handler={this.props.handleInfoChange}
+          />
         </div>
         <SkillList input={skillInput} list={skills} handlers={handlers.skill} />
 

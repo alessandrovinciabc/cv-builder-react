@@ -27,6 +27,7 @@ class App extends React.Component {
     this.state = {
       previewMode: false,
       currentImg: '',
+      info: Array(7).fill(''),
       skillInput: '',
       skills: [],
       sections: sections.map(createSection),
@@ -41,6 +42,7 @@ class App extends React.Component {
     this.handleExperienceDelete = this.handleExperienceDelete.bind(this);
     this.handleExperienceFormReset = this.handleExperienceFormReset.bind(this);
     this.handlePreviewToggle = this.handlePreviewToggle.bind(this);
+    this.handleInfoChange = this.handleInfoChange.bind(this);
   }
 
   handleImgChange(e) {
@@ -51,6 +53,17 @@ class App extends React.Component {
         URL.revokeObjectURL(state.currentImg);
       }
       return { currentImg: newFileURL };
+    });
+  }
+
+  handleInfoChange(e) {
+    this.setState((state) => {
+      let copy = state.info.slice();
+      console.log(e.target.dataset.index);
+      copy[e.target.dataset.index] = e.target.value;
+      return {
+        info: copy,
+      };
     });
   }
 
@@ -180,6 +193,8 @@ class App extends React.Component {
           <Builder
             handlers={handlers}
             currentImg={this.state.currentImg}
+            info={this.state.info}
+            handleInfoChange={this.handleInfoChange}
             skillInput={this.state.skillInput}
             skills={this.state.skills}
             sections={this.state.sections}
