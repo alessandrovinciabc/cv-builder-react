@@ -27,7 +27,7 @@ class App extends React.Component {
     this.state = {
       previewMode: false,
       currentImg: '',
-      info: Array(7).fill(''),
+      info: Array(8).fill(''),
       skillInput: '',
       skills: [],
       sections: sections.map(createSection),

@@ -72,6 +72,17 @@ function InfoInput(props) {
           value={props.info[6]}
         />
       </div>
+      <div className="Builder__card">
+        <input
+          className="Builder__input"
+          type="text"
+          placeholder="Title/Profession"
+          autoComplete="off"
+          data-index="7"
+          onChange={props.handler}
+          value={props.info[7]}
+        />
+      </div>
     </React.Fragment>
   );
 }
