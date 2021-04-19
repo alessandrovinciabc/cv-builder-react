@@ -156,28 +156,24 @@ const MyDocument = (props) => (
           <Text style={styles.header}>Contacts</Text>
           <View style={{ ...styles.sideBarContent, ...styles.contactsSection }}>
             <View>
-              <View>
-                {props.info[2] ? (
-                  <View>
-                    <Image src={place} style={styles.icon} />
-                    <Text>{props.info[2] || false}</Text>
-                  </View>
-                ) : (
-                  false
-                )}
-              </View>
+              {props.info[2] ? (
+                <View>
+                  <Image src={place} style={styles.icon} />
+                  <Text>{props.info[2] || false}</Text>
+                </View>
+              ) : (
+                false
+              )}
             </View>
             <View>
-              <View>
-                {props.info[3] ? (
-                  <View>
-                    <Image src={phone} style={styles.icon} />
-                    <Text>{props.info[3] || false}</Text>
-                  </View>
-                ) : (
-                  false
-                )}
-              </View>
+              {props.info[3] ? (
+                <View>
+                  <Image src={phone} style={styles.icon} />
+                  <Text>{props.info[3] || false}</Text>
+                </View>
+              ) : (
+                false
+              )}
             </View>
             <View>
               {props.info[4] ? (
