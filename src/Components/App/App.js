@@ -7,27 +7,59 @@ import Builder from '../Builder/Builder.js';
 import Preview from '../Preview/Preview.js';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import github from '../../Assets/github.png';
+import linkedin from '../../Assets/linkedin.png';
+import email from '../../Assets/email.png';
+import phone from '../../Assets/phone.png';
+import place from '../../Assets/place.png';
+
 const NUMBER_OF_INPUTS = 4;
+
+let createSection = (title) => {
+  return {
+    id: uuidv4(),
+    title: title,
+    input: Array(NUMBER_OF_INPUTS).fill(''),
+    list: [],
+  };
+};
+
+let createInfoSection = (placeHolder, icon = '') => {
+  return {
+    id: uuidv4(),
+    placeHolder,
+    icon,
+    input: '',
+  };
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     const sections = ['Education', 'Experience', 'Projects'];
+    let infoSections = [
+      'Your name',
+      'Summary',
+      ['City', place],
+      ['Phone', phone],
+      ['Email', email],
+      ['Linkedin', linkedin],
+      ['Github', github],
+      'Title/Profession',
+    ];
 
-    let createSection = (title) => {
-      return {
-        id: uuidv4(),
-        title: title,
-        input: Array(NUMBER_OF_INPUTS).fill(''),
-        list: [],
-      };
-    };
+    let info = infoSections.map((section) => {
+      if (typeof section === 'string') return createInfoSection(section);
+
+      return createInfoSection(...section);
+    });
 
     this.state = {
       previewMode: false,
       currentImg: '',
-      info: Array(8).fill(''),
+      info,
       skillInput: '',
       skills: [],
       sections: sections.map(createSection),
@@ -56,10 +88,10 @@ class App extends React.Component {
     });
   }
 
-  handleInfoChange(e) {
+  handleInfoChange(e, index) {
     this.setState((state) => {
-      let copy = state.info.slice();
-      copy[e.target.dataset.index] = e.target.value;
+      let copy = JSON.parse(JSON.stringify(state.info));
+      copy[index].input = e.target.value;
       return {
         info: copy,
       };
