@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginTop: 20,
+    margin: 20,
   },
   image: {
     width: 90,
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     width: '35%',
     flexDirection: 'column',
     alignItems: 'center',
+    color: 'white',
   },
   main: {
     width: '65%',
@@ -79,6 +80,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    textTransform: 'uppercase',
+  },
+  sideBarSection: {
+    marginLeft: 40,
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  sideBarContent: {
+    fontSize: 10.5,
+    margin: '5 40 20 10',
+  },
+  listCircle: {
+    height: 2,
+    width: 2,
+    borderRadius: '100%',
+    backgroundColor: 'white',
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    lineHeight: 2,
+  },
+  contactsSection: {
+    lineHeight: 2,
+  },
 });
 
 // Create Document Component
@@ -94,6 +126,45 @@ const MyDocument = (props) => (
         ) : (
           false
         )}
+        <View style={styles.sideBarSection}>
+          <Text style={styles.header}>Summary</Text>
+          <Text style={styles.sideBarContent}>{props.info[1] || false}</Text>
+        </View>
+        <View style={styles.sideBarSection}>
+          <Text style={styles.header}>Contacts</Text>
+          <View style={{ ...styles.sideBarContent, ...styles.contactsSection }}>
+            <View>
+              <Text>{props.info[2] || false}</Text>
+            </View>
+            <View>
+              <Text>{props.info[3] || false}</Text>
+            </View>
+            <View>
+              <Text>{props.info[4] || false}</Text>
+            </View>
+            <View>
+              <Text>{props.info[5] || false}</Text>
+            </View>
+            <View>
+              <Text>{props.info[6] || false}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.sideBarSection}>
+          <Text style={styles.header}>Skills</Text>
+          <View style={styles.sideBarContent}>
+            {props.skills
+              ? props.skills.map((skill) => {
+                  return (
+                    <View style={styles.listItem} key={skill.id}>
+                      <View style={styles.listCircle} />
+                      <Text>{skill.text}</Text>
+                    </View>
+                  );
+                })
+              : false}
+          </View>
+        </View>
       </View>
       <View style={styles.main}>
         <View style={styles.nameDisplay}>
@@ -109,7 +180,11 @@ function Preview(props) {
   return (
     <div className="PreviewContainer">
       <PDFViewer width="595px" height="842px">
-        <MyDocument img={props.currentImg} info={props.info}></MyDocument>
+        <MyDocument
+          img={props.currentImg}
+          info={props.info}
+          skills={props.skills}
+        ></MyDocument>
       </PDFViewer>
     </div>
   );
