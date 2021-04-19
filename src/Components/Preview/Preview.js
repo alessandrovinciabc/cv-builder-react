@@ -23,6 +23,8 @@ import email from '../../Assets/email.png';
 import phone from '../../Assets/phone.png';
 import place from '../../Assets/place.png';
 
+import { convertDateRangeToString } from '../ExperienceList/ExperienceList.js';
+
 Font.register({
   family: 'Raleway',
   fonts: [
@@ -124,6 +126,14 @@ const styles = StyleSheet.create({
   icon: {
     width: 10,
     height: 10,
+  },
+  mainSection: {
+    width: '90%',
+    marginBottom: 25,
+  },
+  mainContent: {
+    margin: '0 40',
+    fontSize: 10.5,
   },
 });
 
@@ -245,6 +255,38 @@ const MyDocument = (props) => (
           <Text style={styles.name}>{props.info[0] || false}</Text>
           <Text style={styles.profession}>{props.info[7] || false}</Text>
         </View>
+
+        {props.sections
+          ? props.sections.map((section, index) => {
+              return (
+                <View style={styles.mainSection}>
+                  <Text style={styles.header}>{section.title}</Text>
+                  <View style={styles.mainContent}>
+                    {props.sections
+                      ? props.sections[index].list.map((experience) => {
+                          return (
+                            <View style={{ margin: '15 0' }}>
+                              <Text style={{ fontWeight: 400 }}>
+                                {experience.title}
+                              </Text>
+                              <Text>{experience.description}</Text>
+                              <Text style={{ marginTop: '10' }}>
+                                {experience.startDate && experience.endDate
+                                  ? convertDateRangeToString(
+                                      experience.startDate,
+                                      experience.endDate
+                                    )
+                                  : false}
+                              </Text>
+                            </View>
+                          );
+                        })
+                      : false}
+                  </View>
+                </View>
+              );
+            })
+          : false}
       </View>
     </Page>
   </Document>
@@ -258,6 +300,7 @@ function Preview(props) {
           img={props.currentImg}
           info={props.info}
           skills={props.skills}
+          sections={props.sections}
         ></MyDocument>
       </PDFViewer>
     </div>

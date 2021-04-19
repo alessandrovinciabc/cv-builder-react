@@ -2,6 +2,21 @@ import React from 'react';
 
 import '../Builder/Builder.css';
 
+function convertDateRangeToString(date1, date2) {
+  let startDate, endDate;
+  startDate = new Date(date1);
+  endDate = new Date(date2);
+  let monthStart, monthEnd;
+  let yearStart, yearEnd;
+
+  monthStart = startDate.toLocaleString('default', { month: 'long' });
+  monthEnd = endDate.toLocaleString('default', { month: 'long' });
+  yearStart = startDate.getFullYear();
+  yearEnd = endDate.getFullYear();
+
+  return `From ${monthStart} ${yearStart} to ${monthEnd} ${yearEnd}`;
+}
+
 function ExperienceList(props) {
   return (
     <div className="Builder__education Builder__section">
@@ -54,22 +69,12 @@ function ExperienceList(props) {
         </button>
       </div>
       {props.list.map((el, index) => {
-        let startDate, endDate;
-        startDate = new Date(el.startDate);
-        endDate = new Date(el.endDate);
-        let monthStart, monthEnd;
-        let yearStart, yearEnd;
-
-        monthStart = startDate.toLocaleString('default', { month: 'long' });
-        monthEnd = endDate.toLocaleString('default', { month: 'long' });
-        yearStart = startDate.getFullYear();
-        yearEnd = endDate.getFullYear();
         return (
           <div className="Experience" key={el.id}>
             <div className="Experience__title">{el.title}</div>
             <div className="Experience__description">{el.description}</div>
             {el.startDate && el.endDate
-              ? `From ${monthStart} ${yearStart} to ${monthEnd} ${yearEnd}`
+              ? convertDateRangeToString(el.startDate, el.endDate)
               : ''}
 
             <button
@@ -87,3 +92,4 @@ function ExperienceList(props) {
 }
 
 export default ExperienceList;
+export { convertDateRangeToString };
