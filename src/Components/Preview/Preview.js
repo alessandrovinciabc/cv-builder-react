@@ -17,6 +17,12 @@ import RalewayRegular from '../../Assets/Fonts/Raleway-Regular.ttf';
 import RalewayMedium from '../../Assets/Fonts/Raleway-Medium.ttf';
 import RalewayBold from '../../Assets/Fonts/Raleway-Bold.ttf';
 
+import github from '../../Assets/github.png';
+import linkedin from '../../Assets/linkedin.png';
+import email from '../../Assets/email.png';
+import phone from '../../Assets/phone.png';
+import place from '../../Assets/place.png';
+
 Font.register({
   family: 'Raleway',
   fonts: [
@@ -115,6 +121,10 @@ const styles = StyleSheet.create({
     lineHeight: 2,
     fontSize: 10.5,
   },
+  icon: {
+    width: 10,
+    height: 10,
+  },
 });
 
 let convertUrlToUsername = (url) => {
@@ -146,32 +156,76 @@ const MyDocument = (props) => (
           <Text style={styles.header}>Contacts</Text>
           <View style={{ ...styles.sideBarContent, ...styles.contactsSection }}>
             <View>
-              <Text>{props.info[2] || false}</Text>
+              <View>
+                {props.info[2] ? (
+                  <View>
+                    <Image src={place} style={styles.icon} />
+                    <Text>{props.info[2] || false}</Text>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
             </View>
             <View>
-              <Text>{props.info[3] || false}</Text>
+              <View>
+                {props.info[3] ? (
+                  <View>
+                    <Image src={phone} style={styles.icon} />
+                    <Text>{props.info[3] || false}</Text>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
             </View>
             <View>
-              <Text>{props.info[4] || false}</Text>
+              {props.info[4] ? (
+                <View>
+                  <Image src={email} style={styles.icon} />
+                  <Text>{props.info[4] || false}</Text>
+                </View>
+              ) : (
+                false
+              )}
             </View>
-            <Link
-              style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-              src={props.info[5] || false}
-            >
-              {convertUrlToUsername(props.info[5]) || false}
-            </Link>
-            <Link
-              style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-              src={props.info[6] || false}
-            >
-              {convertUrlToUsername(props.info[6]) || false}
-            </Link>
+            <View>
+              {props.info[5] ? (
+                <View>
+                  <Image src={linkedin} style={styles.icon} />
+                  <Link
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                    src={props.info[5] || false}
+                  >
+                    {convertUrlToUsername(props.info[5]) || false}
+                  </Link>
+                </View>
+              ) : (
+                false
+              )}
+            </View>
+
+            <View>
+              {props.info[6] ? (
+                <View>
+                  <Image src={github} style={styles.icon} />
+                  <Link
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                    src={props.info[6] || false}
+                  >
+                    {convertUrlToUsername(props.info[6]) || false}
+                  </Link>
+                </View>
+              ) : (
+                false
+              )}
+            </View>
           </View>
         </View>
         <View style={styles.sideBarSection}>
