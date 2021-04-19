@@ -3,6 +3,7 @@ import {
   Page,
   Image,
   Text,
+  Link,
   View,
   Document,
   StyleSheet,
@@ -24,6 +25,8 @@ Font.register({
     { src: RalewayBold, fontWeight: 'bold' },
   ],
 });
+
+Font.registerHyphenationCallback((word) => [word]);
 
 // Create styles
 const styles = StyleSheet.create({
@@ -110,8 +113,17 @@ const styles = StyleSheet.create({
   },
   contactsSection: {
     lineHeight: 2,
+    fontSize: 10.5,
   },
 });
+
+let convertUrlToUsername = (url) => {
+  let copy = url.replace(/https:\/\//i, '');
+  copy = copy.replace(/(www\.)?.+\.com\/(in\/)?/i, '');
+  copy = copy.replace(/(\/)?$/, ''); //remove
+
+  return copy;
+};
 
 // Create Document Component
 const MyDocument = (props) => (
@@ -142,12 +154,24 @@ const MyDocument = (props) => (
             <View>
               <Text>{props.info[4] || false}</Text>
             </View>
-            <View>
-              <Text>{props.info[5] || false}</Text>
-            </View>
-            <View>
-              <Text>{props.info[6] || false}</Text>
-            </View>
+            <Link
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              src={props.info[5] || false}
+            >
+              {convertUrlToUsername(props.info[5]) || false}
+            </Link>
+            <Link
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              src={props.info[6] || false}
+            >
+              {convertUrlToUsername(props.info[6]) || false}
+            </Link>
           </View>
         </View>
         <View style={styles.sideBarSection}>
