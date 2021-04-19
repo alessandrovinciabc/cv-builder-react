@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Font,
   PDFViewer,
+  PDFDownloadLink,
 } from '@react-pdf/renderer';
 
 import './Preview.css';
@@ -293,16 +294,28 @@ const MyDocument = (props) => {
 };
 
 function Preview(props) {
+  let generatedPDF = (
+    <MyDocument
+      img={props.currentImg}
+      info={props.info}
+      skills={props.skills}
+      sections={props.sections}
+    />
+  );
   return (
     <div className="PreviewContainer">
       <PDFViewer width="595px" height="842px">
-        <MyDocument
-          img={props.currentImg}
-          info={props.info}
-          skills={props.skills}
-          sections={props.sections}
-        ></MyDocument>
+        {generatedPDF}
       </PDFViewer>
+      <PDFDownloadLink
+        className="DownloadLink"
+        document={generatedPDF}
+        fileName="cv.pdf"
+      >
+        {({ blob, url, loading, error }) =>
+          loading ? 'Loading document...' : 'Download now!'
+        }
+      </PDFDownloadLink>
     </div>
   );
 }
