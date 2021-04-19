@@ -87,7 +87,7 @@ function ExperienceList(props) {
           <div className="Experience" key={el.id}>
             <div className="Experience__title">{el.title}</div>
             <div className="Experience__description">{el.description}</div>
-            {el.startDate && el.endDate
+            {el.startDate || el.endDate
               ? convertDateRangeToString(el.startDate, el.endDate)
               : ''}
 
