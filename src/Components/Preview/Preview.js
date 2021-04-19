@@ -58,9 +58,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   main: {
-    width: '35%',
+    width: '65%',
     height: '100%',
     flexDirection: 'column',
+    alignItems: 'center',
+  },
+  name: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  nameDisplay: {
+    width: '90%',
+    height: '12%',
+    margin: 20,
+    backgroundColor: 'rgb(66, 152, 223)',
+    color: 'white',
+    flexDirection: 'row',
     alignItems: 'center',
   },
 });
@@ -80,7 +94,9 @@ const MyDocument = (props) => (
         )}
       </View>
       <View style={styles.main}>
-        <Text>{props.info[0] || false}</Text>
+        <View style={styles.nameDisplay}>
+          <Text style={styles.name}>{props.info[0] || false}</Text>
+        </View>
       </View>
     </Page>
   </Document>
