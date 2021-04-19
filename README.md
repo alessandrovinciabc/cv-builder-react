@@ -4,6 +4,8 @@
 
 Web app to craft resumes that can then be printed/converted to pdf.
 
+[Live Preview](https://alessandrovinciabc.github.io/cv-builder-react/)
+
 ## How to use
 
 - Fill in the fields;
