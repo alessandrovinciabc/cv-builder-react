@@ -185,6 +185,7 @@ class App extends React.Component {
         {this.state.previewMode ? (
           <Preview
             currentImg={this.state.currentImg}
+            info={this.state.info}
             skills={this.state.skills}
             sections={this.state.sections}
           />
