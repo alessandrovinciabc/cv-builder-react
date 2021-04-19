@@ -66,16 +66,18 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 35,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
+  profession: {},
   nameDisplay: {
+    position: 'relative',
     width: '90%',
     height: '12%',
     margin: 20,
     backgroundColor: 'rgb(66, 152, 223)',
     color: 'white',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -96,6 +98,7 @@ const MyDocument = (props) => (
       <View style={styles.main}>
         <View style={styles.nameDisplay}>
           <Text style={styles.name}>{props.info[0] || false}</Text>
+          <Text style={styles.profession}>{props.info[7] || false}</Text>
         </View>
       </View>
     </Page>
