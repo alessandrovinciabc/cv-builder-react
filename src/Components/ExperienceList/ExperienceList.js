@@ -4,17 +4,31 @@ import '../Builder/Builder.css';
 
 function convertDateRangeToString(date1, date2) {
   let startDate, endDate;
-  startDate = new Date(date1);
-  endDate = new Date(date2);
+
   let monthStart, monthEnd;
   let yearStart, yearEnd;
 
-  monthStart = startDate.toLocaleString('default', { month: 'long' });
-  monthEnd = endDate.toLocaleString('default', { month: 'long' });
-  yearStart = startDate.getFullYear();
-  yearEnd = endDate.getFullYear();
+  startDate = new Date(date1);
+  endDate = new Date(date2);
 
-  return `From ${monthStart} ${yearStart} to ${monthEnd} ${yearEnd}`;
+  if (date1 && date2) {
+    monthStart = startDate.toLocaleString('default', { month: 'long' });
+    monthEnd = endDate.toLocaleString('default', { month: 'long' });
+    yearStart = startDate.getFullYear();
+    yearEnd = endDate.getFullYear();
+
+    return `From ${monthStart} ${yearStart} to ${monthEnd} ${yearEnd}`;
+  } else if (date1 && !date2) {
+    monthStart = startDate.toLocaleString('default', { month: 'long' });
+    yearStart = startDate.getFullYear();
+
+    return `From ${monthStart} ${yearStart} to Present`;
+  } else if (!date1 && date2) {
+    monthEnd = endDate.toLocaleString('default', { month: 'long' });
+    yearEnd = endDate.getFullYear();
+
+    return `${monthEnd} ${yearEnd}`;
+  }
 }
 
 function ExperienceList(props) {

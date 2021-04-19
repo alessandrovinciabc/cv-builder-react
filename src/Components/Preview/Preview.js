@@ -149,11 +149,11 @@ let convertUrlToUsername = (url) => {
 const MyDocument = (props) => {
   let generateExperience = (experience) => {
     return (
-      <View style={{ margin: '15 0' }}>
+      <View style={{ margin: '15 0' }} key={experience.id}>
         <Text style={{ fontWeight: 400 }}>{experience.title}</Text>
         <Text>{experience.description}</Text>
         <Text style={{ marginTop: '10' }}>
-          {experience.startDate && experience.endDate
+          {experience.startDate || experience.endDate
             ? convertDateRangeToString(experience.startDate, experience.endDate)
             : false}
         </Text>
@@ -162,13 +162,12 @@ const MyDocument = (props) => {
   };
 
   let generateSection = (section, index) => {
+    if (!section.list.length) return false;
     return (
-      <View style={styles.mainSection}>
+      <View style={styles.mainSection} key={section.id}>
         <Text style={styles.header}>{section.title}</Text>
         <View style={styles.mainContent}>
-          {props.sections
-            ? props.sections[index].list.map(generateExperience)
-            : false}
+          {props.sections[index].list.map(generateExperience)}
         </View>
       </View>
     );
