@@ -146,151 +146,152 @@ let convertUrlToUsername = (url) => {
 };
 
 // Create Document Component
-const MyDocument = (props) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.sideBar}>
-        {/*passing an empty string makes this crash*/}
-        {props.img ? (
-          <View style={styles.pictureContainer}>
-            <Image src={props.img} style={styles.image} />
-          </View>
-        ) : (
-          false
-        )}
-        <View style={styles.sideBarSection}>
-          <Text style={styles.header}>Summary</Text>
-          <Text style={styles.sideBarContent}>{props.info[1] || false}</Text>
-        </View>
-        <View style={styles.sideBarSection}>
-          <Text style={styles.header}>Contacts</Text>
-          <View style={{ ...styles.sideBarContent, ...styles.contactsSection }}>
-            <View>
-              {props.info[2] ? (
-                <View>
-                  <Image src={place} style={styles.icon} />
-                  <Text>{props.info[2] || false}</Text>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
-            <View>
-              {props.info[3] ? (
-                <View>
-                  <Image src={phone} style={styles.icon} />
-                  <Text>{props.info[3] || false}</Text>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
-            <View>
-              {props.info[4] ? (
-                <View>
-                  <Image src={email} style={styles.icon} />
-                  <Text>{props.info[4] || false}</Text>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
-            <View>
-              {props.info[5] ? (
-                <View>
-                  <Image src={linkedin} style={styles.icon} />
-                  <Link
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                    src={props.info[5] || false}
-                  >
-                    {convertUrlToUsername(props.info[5]) || false}
-                  </Link>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
+const MyDocument = (props) => {
+  let generateExperience = (experience) => {
+    return (
+      <View style={{ margin: '15 0' }}>
+        <Text style={{ fontWeight: 400 }}>{experience.title}</Text>
+        <Text>{experience.description}</Text>
+        <Text style={{ marginTop: '10' }}>
+          {experience.startDate && experience.endDate
+            ? convertDateRangeToString(experience.startDate, experience.endDate)
+            : false}
+        </Text>
+      </View>
+    );
+  };
 
-            <View>
-              {props.info[6] ? (
-                <View>
-                  <Image src={github} style={styles.icon} />
-                  <Link
-                    style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                    src={props.info[6] || false}
-                  >
-                    {convertUrlToUsername(props.info[6]) || false}
-                  </Link>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
-          </View>
-        </View>
-        <View style={styles.sideBarSection}>
-          <Text style={styles.header}>Skills</Text>
-          <View style={styles.sideBarContent}>
-            {props.skills
-              ? props.skills.map((skill) => {
-                  return (
-                    <View style={styles.listItem} key={skill.id}>
-                      <View style={styles.listCircle} />
-                      <Text>{skill.text}</Text>
-                    </View>
-                  );
-                })
-              : false}
-          </View>
+  let generateSection = (section, index) => {
+    return (
+      <View style={styles.mainSection}>
+        <Text style={styles.header}>{section.title}</Text>
+        <View style={styles.mainContent}>
+          {props.sections
+            ? props.sections[index].list.map(generateExperience)
+            : false}
         </View>
       </View>
-      <View style={styles.main}>
-        <View style={styles.nameDisplay}>
-          <Text style={styles.name}>{props.info[0] || false}</Text>
-          <Text style={styles.profession}>{props.info[7] || false}</Text>
-        </View>
+    );
+  };
 
-        {props.sections
-          ? props.sections.map((section, index) => {
-              return (
-                <View style={styles.mainSection}>
-                  <Text style={styles.header}>{section.title}</Text>
-                  <View style={styles.mainContent}>
-                    {props.sections
-                      ? props.sections[index].list.map((experience) => {
-                          return (
-                            <View style={{ margin: '15 0' }}>
-                              <Text style={{ fontWeight: 400 }}>
-                                {experience.title}
-                              </Text>
-                              <Text>{experience.description}</Text>
-                              <Text style={{ marginTop: '10' }}>
-                                {experience.startDate && experience.endDate
-                                  ? convertDateRangeToString(
-                                      experience.startDate,
-                                      experience.endDate
-                                    )
-                                  : false}
-                              </Text>
-                            </View>
-                          );
-                        })
-                      : false}
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.sideBar}>
+          {/*passing an empty string makes this crash*/}
+          {props.img ? (
+            <View style={styles.pictureContainer}>
+              <Image src={props.img} style={styles.image} />
+            </View>
+          ) : (
+            false
+          )}
+          <View style={styles.sideBarSection}>
+            <Text style={styles.header}>Summary</Text>
+            <Text style={styles.sideBarContent}>{props.info[1] || false}</Text>
+          </View>
+          <View style={styles.sideBarSection}>
+            <Text style={styles.header}>Contacts</Text>
+            <View
+              style={{ ...styles.sideBarContent, ...styles.contactsSection }}
+            >
+              <View>
+                {props.info[2] ? (
+                  <View>
+                    <Image src={place} style={styles.icon} />
+                    <Text>{props.info[2] || false}</Text>
                   </View>
-                </View>
-              );
-            })
-          : false}
-      </View>
-    </Page>
-  </Document>
-);
+                ) : (
+                  false
+                )}
+              </View>
+              <View>
+                {props.info[3] ? (
+                  <View>
+                    <Image src={phone} style={styles.icon} />
+                    <Text>{props.info[3] || false}</Text>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
+              <View>
+                {props.info[4] ? (
+                  <View>
+                    <Image src={email} style={styles.icon} />
+                    <Text>{props.info[4] || false}</Text>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
+              <View>
+                {props.info[5] ? (
+                  <View>
+                    <Image src={linkedin} style={styles.icon} />
+                    <Link
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                      src={props.info[5] || false}
+                    >
+                      {convertUrlToUsername(props.info[5]) || false}
+                    </Link>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
+
+              <View>
+                {props.info[6] ? (
+                  <View>
+                    <Image src={github} style={styles.icon} />
+                    <Link
+                      style={{
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                      src={props.info[6] || false}
+                    >
+                      {convertUrlToUsername(props.info[6]) || false}
+                    </Link>
+                  </View>
+                ) : (
+                  false
+                )}
+              </View>
+            </View>
+          </View>
+          <View style={styles.sideBarSection}>
+            <Text style={styles.header}>Skills</Text>
+            <View style={styles.sideBarContent}>
+              {props.skills
+                ? props.skills.map((skill) => {
+                    return (
+                      <View style={styles.listItem} key={skill.id}>
+                        <View style={styles.listCircle} />
+                        <Text>{skill.text}</Text>
+                      </View>
+                    );
+                  })
+                : false}
+            </View>
+          </View>
+        </View>
+        <View style={styles.main}>
+          <View style={styles.nameDisplay}>
+            <Text style={styles.name}>{props.info[0] || false}</Text>
+            <Text style={styles.profession}>{props.info[7] || false}</Text>
+          </View>
+
+          {props.sections ? props.sections.map(generateSection) : false}
+        </View>
+      </Page>
+    </Document>
+  );
+};
 
 function Preview(props) {
   return (
