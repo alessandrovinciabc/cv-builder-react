@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 let convertUrlToUsername = (url) => {
   let copy = url.replace(/https:\/\//i, '');
   copy = copy.replace(/(www\.)?.+\.com\/(in\/)?/i, '');
-  copy = copy.replace(/(\/)?$/, ''); //remove
+  copy = copy.replace(/(\/)?$/, ''); //remove trailing '/'
 
   return copy;
 };
@@ -192,6 +192,19 @@ const MyDocument = (props) => {
               style={{ ...styles.sideBarContent, ...styles.contactsSection }}
             >
               <View>
+                {/* 
+                For some weird reason, if none of the first 3 images
+                in this section get displayed, the download button at
+                the bottom of the page does not work.
+
+                To circumvent that, here we display one of those images
+                with 0x0 dimensions.
+                */}
+                <Image
+                  src={props.info[2].icon}
+                  style={{ position: 'absolute', width: 0, height: 0 }}
+                />
+                {/* */}
                 {props.info[2].input ? (
                   <View>
                     <Image src={props.info[2].icon} style={styles.icon} />
