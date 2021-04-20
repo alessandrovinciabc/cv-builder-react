@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
 
@@ -34,207 +34,197 @@ let createInfoSection = (placeHolder, icon = '') => {
   };
 };
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+function App(props) {
+  const [currentImage, setCurrentImage] = useState('');
 
-    const sections = ['Education', 'Experience', 'Projects'];
-    let infoSections = [
-      'Your name',
-      'Summary',
-      ['City', place],
-      ['Phone', phone],
-      ['Email', email],
-      ['Linkedin', linkedin],
-      ['Github', github],
-      'Title/Profession',
-    ];
+  let handleImgChange = (e) => {
+    setCurrentImage((previousImage) => {
+      let newFileURL = URL.createObjectURL(e.target.files[0]);
 
-    let info = infoSections.map((section) => {
-      if (typeof section === 'string') return createInfoSection(section);
+      if (previousImage) URL.revokeObjectURL(currentImage);
 
-      return createInfoSection(...section);
+      return newFileURL;
     });
+  };
 
-    this.state = {
-      previewMode: false,
-      currentImg: '',
-      info,
-      skillInput: '',
-      skills: [],
-      sections: sections.map(createSection),
-    };
+  let infoSectionNames = [
+    'Your name',
+    'Summary',
+    ['City', place],
+    ['Phone', phone],
+    ['Email', email],
+    ['Linkedin', linkedin],
+    ['Github', github],
+    'Title/Profession',
+  ];
 
-    this.handleImgChange = this.handleImgChange.bind(this);
-    this.handleSkillInputChange = this.handleSkillInputChange.bind(this);
-    this.handleSkillAdd = this.handleSkillAdd.bind(this);
-    this.handleSkillDelete = this.handleSkillDelete.bind(this);
-    this.handleExperienceInputs = this.handleExperienceInputs.bind(this);
-    this.handleExperienceAdd = this.handleExperienceAdd.bind(this);
-    this.handleExperienceDelete = this.handleExperienceDelete.bind(this);
-    this.handleExperienceFormReset = this.handleExperienceFormReset.bind(this);
-    this.handlePreviewToggle = this.handlePreviewToggle.bind(this);
-    this.handleInfoChange = this.handleInfoChange.bind(this);
-  }
+  let infoSections = infoSectionNames.map((section) => {
+    if (typeof section === 'string') return createInfoSection(section);
 
-  handleImgChange(e) {
-    let newFileURL = URL.createObjectURL(e.target.files[0]);
+    return createInfoSection(...section);
+  });
 
-    this.setState((state) => {
-      if (state.currentImg) {
-        URL.revokeObjectURL(state.currentImg);
-      }
-      return { currentImg: newFileURL };
-    });
-  }
+  const [info, setInfo] = useState(infoSections);
 
-  handleInfoChange(e, index) {
-    this.setState((state) => {
-      let copy = JSON.parse(JSON.stringify(state.info));
+  let handleInfoChange = (e, index) => {
+    setInfo((previousInfo) => {
+      let copy = JSON.parse(JSON.stringify(previousInfo));
       copy[index].input = e.target.value;
-      return {
-        info: copy,
-      };
+
+      return copy;
     });
-  }
+  };
 
-  handleSkillInputChange(e) {
-    this.setState({ skillInput: e.target.value });
-  }
+  const [skillInput, setSkillInput] = useState('');
+  const [skills, setSkills] = useState([]);
 
-  handleSkillAdd(e) {
-    this.setState((state) => {
-      if (!state.skillInput) return;
-      return {
-        skills: state.skills.concat([{ id: uuidv4(), text: state.skillInput }]),
-        skillInput: '',
-      };
-    });
-  }
+  let handleSkillInputChange = (e) => {
+    setSkillInput(e.target.value);
+  };
 
-  handleSkillDelete(index) {
-    this.setState((state) => {
-      let filtered = state.skills.slice();
-      filtered.splice(index, 1);
+  let handleSkillAdd = (e) => {
+    if (!skillInput) return;
 
-      return {
-        skills: filtered,
-      };
-    });
-  }
-
-  handleExperienceInputs(e, sectionNumber) {
-    let indexOfInput = e.target.dataset.index;
-    this.setState((state) => {
-      let copy = JSON.parse(JSON.stringify(state.sections));
-      copy[sectionNumber].input[indexOfInput] = e.target.value;
-      return { sections: copy };
-    });
-  }
-
-  handleExperienceAdd(sectionNumber) {
-    this.setState((state) => {
-      if (!state.sections[sectionNumber].input[0]) return;
-      let copy = JSON.parse(JSON.stringify(state.sections));
-
-      copy[sectionNumber].list.push({
-        id: uuidv4(),
-        title: state.sections[sectionNumber].input[0],
-        description: state.sections[sectionNumber].input[1],
-        startDate: state.sections[sectionNumber].input[2],
-        endDate: state.sections[sectionNumber].input[3],
+    setSkillInput((previousInput) => {
+      setSkills((previousSkills) => {
+        return previousSkills.concat([{ id: uuidv4(), text: previousInput }]);
       });
 
+      return '';
+    });
+  };
+
+  let handleSkillDelete = (index) => {
+    setSkills((previousSkills) => {
+      let filtered = previousSkills.slice();
+      filtered.splice(index, 1);
+
+      return filtered;
+    });
+  };
+
+  const sectionNames = ['Education', 'Experience', 'Projects'];
+  let sectionObjects = sectionNames.map(createSection);
+  const [sections, setSections] = useState(sectionObjects);
+
+  let handleExperienceInputs = (e, sectionNumber) => {
+    let indexOfInput = e.target.dataset.index;
+
+    setSections((previous) => {
+      let copy = JSON.parse(JSON.stringify(previous));
+
+      copy[sectionNumber].input[indexOfInput] = e.target.value;
+
+      return copy;
+    });
+  };
+
+  let createExperience = (title, description, startDate, endDate) => {
+    return {
+      id: uuidv4(),
+      title,
+      description,
+      startDate,
+      endDate,
+    };
+  };
+
+  let handleExperienceAdd = (sectionNumber) => {
+    setSections((previous) => {
+      if (!previous[sectionNumber].input[0]) return;
+      let copy = JSON.parse(JSON.stringify(previous));
+
+      let newExperience = createExperience(...previous[sectionNumber].input);
+      copy[sectionNumber].list.push(newExperience);
+
       copy[sectionNumber].input = Array(NUMBER_OF_INPUTS).fill('');
 
-      return {
-        sections: copy,
-      };
+      return copy;
     });
-  }
+  };
 
-  handleExperienceDelete(e, sectionNumber) {
+  let handleExperienceDelete = (e, sectionNumber) => {
     let index = e.target.dataset.index;
-    this.setState((state) => {
-      let copy = JSON.parse(JSON.stringify(state.sections));
-      copy[sectionNumber].list.splice(index, 1);
-      return { sections: copy };
-    });
-  }
 
-  handleExperienceFormReset(sectionNumber) {
-    this.setState((state) => {
-      let copy = JSON.parse(JSON.stringify(state.sections));
+    setSections((previous) => {
+      let copy = JSON.parse(JSON.stringify(previous));
+      copy[sectionNumber].list.splice(index, 1);
+
+      return copy;
+    });
+  };
+
+  let handleExperienceFormReset = (sectionNumber) => {
+    setSections((previous) => {
+      let copy = JSON.parse(JSON.stringify(previous));
       copy[sectionNumber].input = Array(NUMBER_OF_INPUTS).fill('');
 
-      return { sections: copy };
+      return copy;
     });
-  }
+  };
 
-  handlePreviewToggle() {
-    this.setState((state) => {
-      return { previewMode: !state.previewMode };
-    });
-  }
+  let [previewMode, setPreviewMode] = useState(false);
 
-  render() {
-    let skillHandlers, sectionHandlers;
+  let handlePreviewToggle = () => {
+    setPreviewMode((previous) => !previous);
+  };
 
-    skillHandlers = {
-      input: this.handleSkillInputChange,
-      add: this.handleSkillAdd,
-      delete: this.handleSkillDelete,
-    };
+  let skillHandlers, sectionHandlers;
 
-    sectionHandlers = {
-      input: this.handleExperienceInputs,
-      reset: this.handleExperienceFormReset,
-      add: this.handleExperienceAdd,
-      delete: this.handleExperienceDelete,
-    };
+  skillHandlers = {
+    input: handleSkillInputChange,
+    add: handleSkillAdd,
+    delete: handleSkillDelete,
+  };
 
-    let handlers = {
-      img: this.handleImgChange,
-      skill: skillHandlers,
-      section: sectionHandlers,
-    };
+  sectionHandlers = {
+    input: handleExperienceInputs,
+    reset: handleExperienceFormReset,
+    add: handleExperienceAdd,
+    delete: handleExperienceDelete,
+  };
 
-    return (
-      <div className="App">
-        <Header logo="CV BUILDER">
-          <div className="PreviewHeader">
-            <label className="PreviewToggler">
-              <input
-                className="PreviewToggler__input"
-                type="checkbox"
-                checked={this.state.previewMode}
-                onChange={this.handlePreviewToggle}
-              />
-              <div className="PreviewToggler__slider"></div>
-            </label>
-          </div>
-        </Header>
-        {this.state.previewMode ? (
-          <Preview
-            currentImg={this.state.currentImg}
-            info={this.state.info}
-            skills={this.state.skills}
-            sections={this.state.sections}
-          />
-        ) : (
-          <Builder
-            handlers={handlers}
-            currentImg={this.state.currentImg}
-            info={this.state.info}
-            handleInfoChange={this.handleInfoChange}
-            skillInput={this.state.skillInput}
-            skills={this.state.skills}
-            sections={this.state.sections}
-          />
-        )}
-      </div>
-    );
-  }
+  let handlers = {
+    img: handleImgChange,
+    skill: skillHandlers,
+    section: sectionHandlers,
+  };
+
+  return (
+    <div className="App">
+      <Header logo="CV BUILDER">
+        <div className="PreviewHeader">
+          <label className="PreviewToggler">
+            <input
+              className="PreviewToggler__input"
+              type="checkbox"
+              checked={previewMode}
+              onChange={handlePreviewToggle}
+            />
+            <div className="PreviewToggler__slider"></div>
+          </label>
+        </div>
+      </Header>
+      {previewMode ? (
+        <Preview
+          currentImg={currentImage}
+          info={info}
+          skills={skills}
+          sections={sections}
+        />
+      ) : (
+        <Builder
+          handlers={handlers}
+          currentImg={currentImage}
+          info={info}
+          handleInfoChange={handleInfoChange}
+          skillInput={skillInput}
+          skills={skills}
+          sections={sections}
+        />
+      )}
+    </div>
+  );
 }
 
 export default App;
